@@ -16,7 +16,7 @@ object Main extends App {
 
   client.onEventSideEffects { implicit c => {
     case APIMessage.Ready(_) => println("Now ready")
-    case APIMessage.MessageCreate(_, message, _) if message.content == "!start server" => startServer()
+    case APIMessage.MessageCreate(_, message, _) if message.content == "!start-server" => startServer()
     case APIMessage.MessageCreate(_, message, _) if message.content == "!address" => sendMsg(message.channelId, sys.env("Minecraft_Address"))
     case APIMessage.MessageCreate(_, message, _) if message.content == "!mod" => sendMsg(message.channelId, "https://www.dropbox.com/sh/34cwpmnf5q6al5g/AAC1MTx5TviqHUGWG9eXE5Cta?dl=0")
     case APIMessage.MessageCreate(_, message, _) if message.content == "!help" => sendMsg(message.channelId, createHelp)
@@ -39,12 +39,20 @@ object Main extends App {
     ).map(_ => ())
 
   def createHelp =
-    """
-      |!help          コマンド一覧
-      |!start server  マイクラサーバー起動
-      |!address       マイクラのサーバーアドレス
-      |!mod           mod一覧ファイル
-      |""".stripMargin
+    fmtHelp(Seq(
+      ("!help", "コマンド一覧"),
+      ("!start-server", "マイクラサーバー起動"),
+      ("!address", "マイクラのサーバーアドレス"),
+      ("!mod", "mod一覧ファイル")
+    ))
+
+  def fmtHelp(seq: Seq[(String, String)]) = {
+    val maxWidth = seq.maxBy(_._1)._1.length + 2
+
+    seq.map { case (cmd, memo) =>
+      cmd + " " * (maxWidth - cmd.length) + memo
+    }.mkString("\n")
+  }
 
 }
 
