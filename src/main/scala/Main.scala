@@ -1,6 +1,10 @@
 import ackcord._
-import ackcord.data._
+import ackcord.data.TextChannelId
+import ackcord.requests._
+import ackcord.syntax._
+
 import scala.concurrent.Await
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.sys.process._
 
@@ -10,10 +14,12 @@ object Main extends App {
   val clientSettings = ClientSettings(token)
   val client = Await.result(clientSettings.createClient(), Duration.Inf)
 
-  client.onEventSideEffectsIgnore {
+  client.onEventSideEffects { implicit c => {
     case APIMessage.Ready(_) => println("Now ready")
     case APIMessage.MessageCreate(_, message, _) if message.content == "!start server" => startServer()
-  }
+    case APIMessage.MessageCreate(_, message, _) if message.content == "!address" => sendMsg(message.channelId, sys.env("Minecraft_Address"))
+    case APIMessage.MessageCreate(_, message, _) if message.content == "!mod" => sendMsg(message.channelId, "https://www.dropbox.com/sh/34cwpmnf5q6al5g/AAC1MTx5TviqHUGWG9eXE5Cta?dl=0")
+  }}
 
   client.login()
 
@@ -22,5 +28,14 @@ object Main extends App {
 
     Process(Seq("cmd.exe", "/c", "start", batFile)).run()
   }
+
+  def sendMsg(channelId: TextChannelId,msg: String)(implicit c: CacheSnapshot) =
+    client.requestsHelper.run(
+      CreateMessage(
+        channelId,
+        CreateMessageData(msg)
+      )
+    ).map(_ => ())
+
 }
 
