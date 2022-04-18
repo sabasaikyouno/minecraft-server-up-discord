@@ -1,11 +1,20 @@
 import ackcord.{CacheSnapshot, DiscordClient}
-import ackcord.data.TextChannelId
+import ackcord.data.{Message, TextChannelId}
 import ackcord.requests.{CreateMessage, CreateMessageData}
 
 import scala.sys.process.Process
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object cmdEvents {
+
+  def cmd(message: Message)(implicit c: CacheSnapshot, client: DiscordClient) = {
+    message.content match {
+      case "!start-server" => startServer()
+      case "!address" => sendMsg(message.channelId, sys.env("Minecraft_Address"))
+      case "!mod" => sendMsg(message.channelId, "https://www.dropbox.com/sh/34cwpmnf5q6al5g/AAC1MTx5TviqHUGWG9eXE5Cta?dl=0")
+      case "!help" => sendMsg(message.channelId, createHelp)
+    }
+  }
 
   def startServer() = {
     val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\start.bat"
