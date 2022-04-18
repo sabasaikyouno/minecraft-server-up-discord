@@ -8,11 +8,13 @@ import scala.concurrent.ExecutionContext.Implicits.global
 object cmdEvents {
 
   def cmd(message: Message)(implicit c: CacheSnapshot, client: DiscordClient) = {
+    implicit val channelId = message.channelId
+
     message.content match {
       case "!start-server" => startServer()
-      case "!address" => sendMsg(message.channelId, sys.env("Minecraft_Address"))
-      case "!mod" => sendMsg(message.channelId, "https://www.dropbox.com/sh/34cwpmnf5q6al5g/AAC1MTx5TviqHUGWG9eXE5Cta?dl=0")
-      case "!help" => sendMsg(message.channelId, createHelp)
+      case "!address" => sendMsg(sys.env("Minecraft_Address"))
+      case "!mod" => sendMsg("https://www.dropbox.com/sh/34cwpmnf5q6al5g/AAC1MTx5TviqHUGWG9eXE5Cta?dl=0")
+      case "!help" => sendMsg(createHelp)
     }
   }
 
@@ -22,7 +24,7 @@ object cmdEvents {
     Process(Seq("cmd.exe", "/c", "start", batFile)).run()
   }
 
-  def sendMsg(channelId: TextChannelId,msg: String)(implicit c: CacheSnapshot, client: DiscordClient) =
+  def sendMsg(msg: String)(implicit c: CacheSnapshot, client: DiscordClient, channelId: TextChannelId) =
     client.requestsHelper.run(
       CreateMessage(
         channelId,
