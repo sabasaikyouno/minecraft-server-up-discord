@@ -1,5 +1,5 @@
 import ackcord._
-import cmdEvents._
+import cmdEvents.cmd
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration

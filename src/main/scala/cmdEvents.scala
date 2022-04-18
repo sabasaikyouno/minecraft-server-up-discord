@@ -15,6 +15,7 @@ object cmdEvents {
       case "!address" => sendMsg(sys.env("Minecraft_Address"))
       case "!mod" => sendMsg("https://www.dropbox.com/sh/34cwpmnf5q6al5g/AAC1MTx5TviqHUGWG9eXE5Cta?dl=0")
       case "!help" => sendMsg(createHelp)
+      case "!github" => sendMsg("https://github.com/sabasaikyouno/minecraft-server-up-discord")
     }
   }
 
@@ -37,7 +38,8 @@ object cmdEvents {
       ("!help", "コマンド一覧"),
       ("!start-server", "マイクラサーバー起動"),
       ("!address", "マイクラのサーバーアドレス"),
-      ("!mod", "mod一覧ファイル")
+      ("!mod", "mod一覧ファイル"),
+      ("!github", "discord-botのsource")
     ))
 
   private def fmtHelp(seq: Seq[(String, String)]) = {
