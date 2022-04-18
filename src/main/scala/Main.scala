@@ -1,18 +1,14 @@
 import ackcord._
-import ackcord.data.TextChannelId
-import ackcord.requests._
-import ackcord.syntax._
+import cmdEvents._
 
 import scala.concurrent.Await
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
-import scala.sys.process._
 
 object Main extends App {
 
-  val token = sys.env("DISCORD_TOKEN")
-  val clientSettings = ClientSettings(token)
-  val client = Await.result(clientSettings.createClient(), Duration.Inf)
+  private val token = sys.env("DISCORD_TOKEN")
+  private val clientSettings = ClientSettings(token)
+  private implicit val client = Await.result(clientSettings.createClient(), Duration.Inf)
 
   client.onEventSideEffects { implicit c => {
     case APIMessage.Ready(_) => println("Now ready")
@@ -23,36 +19,5 @@ object Main extends App {
   }}
 
   client.login()
-
-  def startServer() = {
-    val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\start.bat"
-
-    Process(Seq("cmd.exe", "/c", "start", batFile)).run()
-  }
-
-  def sendMsg(channelId: TextChannelId,msg: String)(implicit c: CacheSnapshot) =
-    client.requestsHelper.run(
-      CreateMessage(
-        channelId,
-        CreateMessageData(msg)
-      )
-    ).map(_ => ())
-
-  def createHelp =
-    fmtHelp(Seq(
-      ("!help", "コマンド一覧"),
-      ("!start-server", "マイクラサーバー起動"),
-      ("!address", "マイクラのサーバーアドレス"),
-      ("!mod", "mod一覧ファイル")
-    ))
-
-  def fmtHelp(seq: Seq[(String, String)]) = {
-    val maxWidth = seq.maxBy(_._1)._1.length + 2
-
-    seq.map { case (cmd, memo) =>
-      cmd + " " * (maxWidth - cmd.length) + memo
-    }.mkString("\n")
-  }
-
 }
 
