@@ -10,6 +10,7 @@ object Main extends App {
   private val clientSettings = ClientSettings(token)
   private implicit val client = Await.result(clientSettings.createClient(), Duration.Inf)
 
+  // event
   client.onEventSideEffects { implicit c => {
     case APIMessage.Ready(_) => println("Now ready")
     case APIMessage.MessageCreate(_, message, _) => cmd(message)
