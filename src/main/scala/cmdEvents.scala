@@ -13,14 +13,14 @@ object cmdEvents {
     message.content match {
       case "!start-server" => startServer()
       case "!address" => sendMsg(sys.env("Minecraft_Address"))
-      case "!mod" => sendMsg("https://www.dropbox.com/sh/34cwpmnf5q6al5g/AAC1MTx5TviqHUGWG9eXE5Cta?dl=0")
+      case "!mod" => sendMsg("https://1drv.ms/u/s!Andx-P21NVAYi5o8kYlDGXFscGvYDQ")
       case "!help" => sendMsg(createHelp)
       case "!github" => sendMsg("https://github.com/sabasaikyouno/minecraft-server-up-discord")
     }
   }
 
   def startServer() = {
-    val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\start.bat"
+    val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.mod2server1.12.2\\start.bat"
 
     Process(Seq("cmd.exe", "/c", "start", batFile)).run()
   }
