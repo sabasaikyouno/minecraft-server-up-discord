@@ -20,7 +20,7 @@ object cmdEvents {
   }
 
   def startServer() = {
-    val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.mod2server1.12.2\\start.bat"
+    val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\start.bat"
 
     Process(Seq("cmd.exe", "/c", "start", batFile)).run()
   }
