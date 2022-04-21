@@ -1,5 +1,6 @@
 import ackcord._
 import cmdEvents.cmd
+import Backup._
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
@@ -17,5 +18,8 @@ object Main extends App {
   }}
 
   client.login()
+
+  // 自動バックアップスタート
+  startAutoBackup()
 }
 
