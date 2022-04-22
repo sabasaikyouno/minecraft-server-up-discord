@@ -1,6 +1,7 @@
 import ackcord.{CacheSnapshot, DiscordClient}
 import ackcord.data.{Message, TextChannelId}
 import ackcord.requests.{CreateMessage, CreateMessageData}
+import Backup._
 
 import scala.sys.process.Process
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -16,6 +17,7 @@ object cmdEvents {
       case "!mod" => sendMsg("https://1drv.ms/u/s!Andx-P21NVAYi5o8kYlDGXFscGvYDQ")
       case "!help" => sendMsg(createHelp)
       case "!github" => sendMsg("https://github.com/sabasaikyouno/minecraft-server-up-discord")
+      case "!backup" => backup()
     }
   }
 
