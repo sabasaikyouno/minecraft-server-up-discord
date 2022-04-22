@@ -41,7 +41,8 @@ object cmdEvents {
       ("!start-server", "マイクラサーバー起動"),
       ("!address", "マイクラのサーバーアドレス"),
       ("!mod", "mod一覧ファイル"),
-      ("!github", "discord-botのsource")
+      ("!github", "discord-botのsource"),
+      ("!backup", "マイクラのbackupを取る")
     ))
 
   private def fmtHelp(seq: Seq[(String, String)]) = {
