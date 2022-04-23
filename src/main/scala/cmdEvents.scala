@@ -2,10 +2,10 @@ import ackcord.{CacheSnapshot, DiscordClient}
 import ackcord.data.{Message, TextChannelId}
 import ackcord.requests.{CreateMessage, CreateMessageData, CreateMessageFile}
 import Backup._
-import java.nio.file.Path
 
 import scala.sys.process.Process
 import scala.concurrent.ExecutionContext.Implicits.global
+import java.io.File
 
 object cmdEvents {
 
@@ -50,16 +50,16 @@ object cmdEvents {
 
   def cmdConfig(msg: String)(implicit cacheSnapshot: CacheSnapshot, client: DiscordClient, channelId: TextChannelId) =
     msg.drop(8) match {
-      case "mineall" => sendFile(Path.of("C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\config\\net.minecraft.scalar.mineall.mod_mineallsmp.cfg"))
-      case "cutall" => sendFile(Path.of("C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\config\\net.minecraft.scalar.cutall.mod_cutallsmp.cfg"))
+      case "mineall" => sendFile(new File("C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\config\\net.minecraft.scalar.mineall.mod_mineallsmp.cfg"))
+      case "cutall" => sendFile(new File("C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\config\\net.minecraft.scalar.cutall.mod_cutallsmp.cfg"))
       case "" => sendMsg(createHelpConfig)
     }
 
-  def sendFile(path: Path)(implicit c: CacheSnapshot, client: DiscordClient, channelId: TextChannelId) =
+  def sendFile(file: File)(implicit c: CacheSnapshot, client: DiscordClient, channelId: TextChannelId) =
     client.requestsHelper.run(
       CreateMessage(
         channelId,
-        CreateMessageData(files = Seq(CreateMessageFile.FromPath(path)))
+        CreateMessageData(files = Seq(CreateMessageFile.FromPath(file.toPath)))
       )
     ).map(_ => ())
 
