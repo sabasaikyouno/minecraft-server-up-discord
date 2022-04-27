@@ -34,9 +34,12 @@ object Backup {
   // 重複したbackupを取らないようにする
   def canBackup() = {
     val worldFile = new File(worldFilePath)
-    val backupFiles = new File(backupFilePath)
+    val backupFiles = new File(backupFilePath).listFiles()
 
-    worldFile.lastModified() != backupFiles.lastModified()
+    if (backupFiles.nonEmpty)
+      worldFile.lastModified() != backupFiles.max.lastModified()
+    else
+      true
   }
 
   // backupファイル数がfileMax以上になったら超えた数を消す
