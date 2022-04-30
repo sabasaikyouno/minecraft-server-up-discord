@@ -36,10 +36,7 @@ object Backup {
     val worldFile = new File(worldFilePath)
     val backupFiles = new File(backupFilePath).listFiles()
 
-    if (backupFiles.nonEmpty)
-      worldFile.lastModified() != backupFiles.max.lastModified()
-    else
-      true
+    backupFiles.isEmpty || backupFiles.max.lastModified() != worldFile.lastModified()
   }
 
   // backupファイル数がfileMax以上になったら超えた数を消す
