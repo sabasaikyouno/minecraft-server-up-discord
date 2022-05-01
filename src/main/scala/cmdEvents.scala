@@ -24,7 +24,7 @@ object cmdEvents {
   }
 
   def startServer() = {
-    val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\start.bat"
+    val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\start.bat"
 
     Process(Seq("cmd.exe", "/c", "start", batFile)).run()
   }
@@ -50,8 +50,8 @@ object cmdEvents {
 
   def cmdConfig(msg: String)(implicit cacheSnapshot: CacheSnapshot, client: DiscordClient, channelId: TextChannelId) =
     msg.drop(8) match {
-      case "mineall" => sendFile(new File("C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\config\\net.minecraft.scalar.mineall.mod_mineallsmp.cfg"))
-      case "cutall" => sendFile(new File("C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\config\\net.minecraft.scalar.cutall.mod_cutallsmp.cfg"))
+      case "mineall" => sendFile(new File("C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\config\\net.minecraft.scalar.mineall.mod_mineallsmp.cfg"))
+      case "cutall" => sendFile(new File("C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\config\\net.minecraft.scalar.cutall.mod_cutallsmp.cfg"))
       case "" => sendMsg(createHelpConfig)
     }
 

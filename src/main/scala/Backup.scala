@@ -8,8 +8,8 @@ import java.nio.file.Files.delete
 
 object Backup {
 
-  private val worldFilePath = "C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\world"
-  private val backupFilePath = "C:\\Users\\kurotan\\AppData\\Roaming\\.mod3server1.12.2\\backup"
+  private val worldFilePath = "C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\world"
+  private val backupFilePath = "C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\backup"
 
   def backup() = {
     val worldFile = new File(worldFilePath)
