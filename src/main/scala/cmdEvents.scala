@@ -15,7 +15,7 @@ object cmdEvents {
     message.content match {
       case "!start-server" => startServer()
       case "!address"     => sendMsg(sys.env("Minecraft_Address"))
-      case "!mod"         => sendMsg("https://1drv.ms/u/s!Andx-P21NVAYi5o8kYlDGXFscGvYDQ")
+      case "!mod"         => sendMsg("https://1drv.ms/f/s!Andx-P21NVAYio8WCW0FzRLZziCRkg")
       case "!help"        => sendMsg(createHelp)
       case "!github"      => sendMsg("https://github.com/sabasaikyouno/minecraft-server-up-discord")
       case "!backup"      => backup()
