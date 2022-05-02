@@ -7,7 +7,7 @@ import scala.sys.process.Process
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.io.File
 
-object cmdEvents {
+object cmdEvents extends FileList {
 
   def cmd(message: Message)(implicit c: CacheSnapshot, client: DiscordClient) = {
     implicit val channelId = message.channelId
@@ -23,11 +23,8 @@ object cmdEvents {
     }
   }
 
-  def startServer() = {
-    val batFile = "C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\start.bat"
-
-    Process(Seq("cmd.exe", "/c", "start", batFile)).run()
-  }
+  def startServer() =
+    Process(Seq("cmd.exe", "/c", "start", batFilePath)).run()
 
   def sendMsg(msg: String)(implicit c: CacheSnapshot, client: DiscordClient, channelId: TextChannelId) =
     client.requestsHelper.run(
@@ -50,8 +47,8 @@ object cmdEvents {
 
   def cmdConfig(msg: String)(implicit cacheSnapshot: CacheSnapshot, client: DiscordClient, channelId: TextChannelId) =
     msg.drop(8) match {
-      case "mineall" => sendFile(new File("C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\config\\net.minecraft.scalar.mineall.mod_mineallsmp.cfg"))
-      case "cutall" => sendFile(new File("C:\\Users\\kurotan\\AppData\\Roaming\\.modserver1.12.2\\config\\net.minecraft.scalar.cutall.mod_cutallsmp.cfg"))
+      case "mineall" => sendFile(mineallFile)
+      case "cutall" => sendFile(cutallFile)
       case "" => sendMsg(createHelpConfig)
     }
 
