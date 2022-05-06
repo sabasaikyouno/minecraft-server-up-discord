@@ -1,6 +1,7 @@
 import ackcord._
 import cmdEvents.cmd
 import Backup._
+import MineChat._
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
@@ -13,7 +14,7 @@ object Main extends App {
 
   // event
   client.onEventSideEffects { implicit c => {
-    case APIMessage.Ready(_) => println("Now ready")
+    case APIMessage.Ready(_) => startMineChat()
     case APIMessage.MessageCreate(_, message, _) => cmd(message)
   }}
 

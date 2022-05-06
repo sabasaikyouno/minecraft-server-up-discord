@@ -6,4 +6,5 @@ trait PathList {
   val configFilePath: String = serverFilePath + "config\\"
   val mineallFilePath: String = configFilePath + "net.minecraft.scalar.mineall.mod_mineallsmp.cfg"
   val cutallFilePath: String = configFilePath + "net.minecraft.scalar.cutall.mod_cutallsmp.cfg"
+  val logFilePath: String = serverFilePath + "logs\\latest.log"
 }
