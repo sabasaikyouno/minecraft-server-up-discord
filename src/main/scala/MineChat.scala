@@ -16,7 +16,8 @@ object MineChat extends FileList {
     val actorSystem = ActorSystem("MineChatActor")
     val mineChatActor = actorSystem.actorOf(Props(new MineChatActor(logFile.getLines())))
 
-    actorSystem.scheduler.schedule(0.millis, 500.millis, mineChatActor, "chat")
+    actorSystem.scheduler.scheduleOnce(0.millis, mineChatActor, "init")
+    actorSystem.scheduler.schedule(500.millis, 500.millis, mineChatActor, "chat")
   }
 
   def sendToDiscord(line: String)(implicit c: CacheSnapshot, client: DiscordClient): Unit = {

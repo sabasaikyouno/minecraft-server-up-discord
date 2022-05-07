@@ -6,5 +6,6 @@ class MineChatActor(lines: Iterator[String])(implicit c: CacheSnapshot, client: 
 
   override def receive = {
     case "chat" => lines.foreach(sendToDiscord)
+    case "init" => lines.length
   }
 }
