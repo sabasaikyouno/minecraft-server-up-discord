@@ -7,19 +7,25 @@ import scala.sys.process.Process
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.io.File
 
-object cmdEvents extends FileList {
+object cmdEvents extends FileList with MineRcon {
 
   def cmd(message: Message)(implicit c: CacheSnapshot, client: DiscordClient) = {
     implicit val channelId = message.channelId
 
-    message.content match {
-      case "!start-server" => startServer()
-      case "!address"     => sendMsg(sys.env("Minecraft_Address"))
-      case "!mod"         => sendMsg("https://www.dropbox.com/s/icgunjwdg78thz8/mods-client.zip?dl=0")
-      case "!help"        => sendMsg(createHelp)
-      case "!github"      => sendMsg("https://github.com/sabasaikyouno/minecraft-server-up-discord")
-      case "!backup"      => backup()
-      case msg if msg.take(7) == "!config" => cmdConfig(msg)
+    message match {
+      case cmdMsg if cmdMsg.content.head == '!' =>
+        cmdMsg.content match {
+          case "!start-server" => startServer()
+          case "!address"     => sendMsg(sys.env("Minecraft_Address"))
+          case "!mod"         => sendMsg("https://www.dropbox.com/s/icgunjwdg78thz8/mods-client.zip?dl=0")
+          case "!help"        => sendMsg(createHelp)
+          case "!github"      => sendMsg("https://github.com/sabasaikyouno/minecraft-server-up-discord")
+          case "!backup"      => backup()
+          case msg if msg.take(7) == "!config" => cmdConfig(msg)
+        }
+      case msg if msg.authorId.toString != "963751130154819634" && channelId == TextChannelId(972072490903949332L) =>
+        sendMineChat(msg)
+
     }
   }
 

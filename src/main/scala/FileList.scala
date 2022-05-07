@@ -1,6 +1,8 @@
 import java.io.File
 import java.util.Date
 
+import scala.io.Source
+
 trait FileList extends PathList {
   val worldFile = new File(worldFilePath)
   def backupFolder = {
@@ -10,5 +12,5 @@ trait FileList extends PathList {
   val backupFiles: Array[File] = new File(backupFilePath).listFiles()
   val mineallFile = new File(mineallFilePath)
   val cutallFile = new File(cutallFilePath)
-  val logFile = new File(logFilePath)
+  val logFile = Source.fromFile(logFilePath, "Shift-JIS")
 }

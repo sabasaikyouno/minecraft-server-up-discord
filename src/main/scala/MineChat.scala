@@ -1,11 +1,7 @@
-import java.nio.charset.Charset
-
 import ackcord.data.TextChannelId
 import ackcord.requests.{CreateMessage, CreateMessageData}
 import ackcord.{CacheSnapshot, DiscordClient}
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
-import akka.stream.alpakka.file.scaladsl.FileTailSource
+import akka.actor.{ActorSystem, Props}
 import LogParse._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -15,20 +11,15 @@ object MineChat extends FileList {
   private val textChannelId = TextChannelId(972072490903949332L)
 
   def startMineChat()(implicit c: CacheSnapshot, client: DiscordClient) = {
-    implicit val system = ActorSystem("MineChatActor")
-    implicit val materializer = ActorMaterializer()
+    import actorSystem.dispatcher
 
-    val lines = FileTailSource.lines(
-      path = logFile.toPath,
-      maxLineSize = 8192,
-      pollingInterval = 250.millis,
-      charset = Charset.forName("sjis")
-    )
+    val actorSystem = ActorSystem("MineChatActor")
+    val mineChatActor = actorSystem.actorOf(Props(new MineChatActor(logFile.getLines())))
 
-    lines.runForeach(sendToDiscord)
+    actorSystem.scheduler.schedule(0.millis, 500.millis, mineChatActor, "chat")
   }
 
-  def sendToDiscord(line: String)(implicit c: CacheSnapshot, client: DiscordClient) = {
+  def sendToDiscord(line: String)(implicit c: CacheSnapshot, client: DiscordClient): Unit = {
     parse(line) match {
       case Some(chat) =>
         client.requestsHelper.run(

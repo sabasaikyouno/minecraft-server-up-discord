@@ -1,8 +1,10 @@
 import akka.actor.Actor
+import MineChat.sendToDiscord
+import ackcord.{CacheSnapshot, DiscordClient}
 
-class MineChatActor extends Actor {
+class MineChatActor(lines: Iterator[String])(implicit c: CacheSnapshot, client: DiscordClient) extends Actor with FileList {
 
-  override def receive: Receive = {
-    case "chat" => println("hi")
+  override def receive = {
+    case "chat" => lines.foreach(sendToDiscord)
   }
 }

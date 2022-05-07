@@ -13,6 +13,9 @@ libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.14"
 libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.6.14"
 libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % "2.6.14"
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-typed" % "2.6.14"
+libraryDependencies += "nl.vv32.rcon" % "rcon" % "1.2.0"
+libraryDependencies += "io.netty" % "netty-all" % "4.1.77.Final"
+
 
 assemblyMergeStrategy in assembly := {
   case PathList("module-info.class") => MergeStrategy.first
