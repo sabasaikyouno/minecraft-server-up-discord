@@ -7,8 +7,7 @@ import LogParse._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
-object MineChat extends FileList {
-  private val textChannelId = TextChannelId(972072490903949332L)
+object MineChat extends FileList with DiscoList {
 
   def startMineChat()(implicit c: CacheSnapshot, client: DiscordClient) = {
     import actorSystem.dispatcher
@@ -25,7 +24,7 @@ object MineChat extends FileList {
       case Some(chat) =>
         client.requestsHelper.run(
           CreateMessage(
-            textChannelId,
+            mineChatChannel,
             CreateMessageData(chat)
           )
         ).map(_ => ())

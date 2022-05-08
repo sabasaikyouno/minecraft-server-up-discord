@@ -7,7 +7,7 @@ import scala.sys.process.Process
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.io.File
 
-object cmdEvents extends FileList with MineRcon {
+object cmdEvents extends FileList with MineRcon with DiscoList {
 
   def cmd(message: Message)(implicit c: CacheSnapshot, client: DiscordClient) = {
     implicit val channelId = message.channelId
@@ -23,7 +23,7 @@ object cmdEvents extends FileList with MineRcon {
           case "!backup"      => backup()
           case msg if msg.take(7) == "!config" => cmdConfig(msg)
         }
-      case msg if msg.authorId.toString != "963751130154819634" && channelId == TextChannelId(972072490903949332L) =>
+      case msg if msg.authorId.toString != botId && channelId == mineChatChannel =>
         sendMineChat(msg)
 
     }
