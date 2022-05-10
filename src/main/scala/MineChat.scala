@@ -7,17 +7,16 @@ import LogParse._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
+case class Chat()(implicit val c: CacheSnapshot, implicit val client: DiscordClient)
+
 object MineChat extends FileList with DiscoList {
+  import actorSystem.dispatcher
 
-  def startMineChat()(implicit c: CacheSnapshot, client: DiscordClient) = {
-    import actorSystem.dispatcher
+  private val actorSystem = ActorSystem("MineChatActor")
+  private val mineChatActor = actorSystem.actorOf(Props(new MineChatActor()))
 
-    val actorSystem = ActorSystem("MineChatActor")
-    val mineChatActor = actorSystem.actorOf(Props(new MineChatActor(logFile.getLines())))
-
-    actorSystem.scheduler.scheduleOnce(0.millis, mineChatActor, "init")
-    actorSystem.scheduler.schedule(500.millis, 500.millis, mineChatActor, "chat")
-  }
+  def startMineChat()(implicit c: CacheSnapshot, client: DiscordClient) =
+    actorSystem.scheduler.schedule(3.seconds, 500.millis, mineChatActor, Chat())
 
   def sendToDiscord(line: String)(implicit c: CacheSnapshot, client: DiscordClient): Unit = {
     parse(line) match {
@@ -31,4 +30,7 @@ object MineChat extends FileList with DiscoList {
       case None => ()
     }
   }
+
+  def restartMineChat()(implicit c: CacheSnapshot, client: DiscordClient) =
+    actorSystem.scheduler.scheduleOnce(5.seconds, mineChatActor, "restart")
 }

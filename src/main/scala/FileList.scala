@@ -12,6 +12,6 @@ trait FileList extends PathList {
   val backupFiles: Array[File] = new File(backupFilePath).listFiles()
   val mineallFile = new File(mineallFilePath)
   val cutallFile = new File(cutallFilePath)
-  val logFile = Source.fromFile(logFilePath, "Shift-JIS")
+  def logFile = Source.fromFile(logFilePath, "Shift-JIS")
   val logJFile = new File(logFilePath)
 }

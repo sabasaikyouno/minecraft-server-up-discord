@@ -12,10 +12,10 @@ trait MineRcon {
       new InetSocketAddress("localhost", 65285)))
     .withCharset(Charset.forName("utf-8"))
     .build()
-  rcon.authenticate(minePassword)
 
   def sendMineChat(msg: Message) = {
-    rcon.sendCommand(fmtChat(msg.authorUsername, msg.content))
+    if (rcon.authenticate(minePassword))
+      rcon.sendCommand(fmtChat(msg.authorUsername, msg.content))
   }
 
   private def fmtChat(name: String, chat: String) = {
