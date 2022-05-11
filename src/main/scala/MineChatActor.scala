@@ -9,8 +9,12 @@ class MineChatActor() extends Actor with FileList {
   override def receive = {
     case chat: Chat if lastModified != logJFile.lastModified() =>
       import chat._
-      lines.foreach(sendToDiscord)
-      lastModified = logJFile.lastModified()
+      if (lines.hasNext) {
+        lines.foreach(sendToDiscord)
+        lastModified = logJFile.lastModified()
+      } else {
+        lines = logFile.getLines()
+      }
     case "restart" =>
       lines = logFile.getLines()
       lines.length
