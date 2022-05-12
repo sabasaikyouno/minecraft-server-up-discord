@@ -30,7 +30,4 @@ object MineChat extends FileList with DiscoList {
       case None => ()
     }
   }
-
-  def restartMineChat()(implicit c: CacheSnapshot, client: DiscordClient) =
-    actorSystem.scheduler.scheduleOnce(5.seconds, mineChatActor, "restart")
 }

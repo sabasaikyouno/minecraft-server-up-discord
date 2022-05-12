@@ -15,8 +15,5 @@ class MineChatActor() extends Actor with FileList {
       } else {
         lines = logFile.getLines()
       }
-    case "restart" =>
-      lines = logFile.getLines()
-      lines.length
   }
 }

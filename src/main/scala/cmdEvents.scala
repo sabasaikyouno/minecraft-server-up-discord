@@ -2,7 +2,6 @@ import ackcord.{CacheSnapshot, DiscordClient}
 import ackcord.data.{Message, TextChannelId}
 import ackcord.requests.{CreateMessage, CreateMessageData, CreateMessageFile}
 import Backup._
-import MineChat.restartMineChat
 
 import scala.sys.process.Process
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -16,9 +15,7 @@ object cmdEvents extends FileList with MineRcon with DiscoList {
     message match {
       case cmdMsg if cmdMsg.content.head == '!' =>
         cmdMsg.content match {
-          case "!start-server" =>
-            startServer()
-            restartMineChat()
+          case "!start-server" => startServer()
           case "!address"     => sendMsg(sys.env("Minecraft_Address"))
           case "!mod"         => sendMsg("https://www.dropbox.com/s/icgunjwdg78thz8/mods-client.zip?dl=0")
           case "!help"        => sendMsg(createHelp)
