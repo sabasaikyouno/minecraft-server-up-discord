@@ -25,9 +25,9 @@ object Backup extends FileList {
     backupFiles.isEmpty || backupFiles.max.lastModified() != worldFile.lastModified()
 
   // backupファイル数がfileMax以上になったら超えた数を消す
-  def deleteBackup(fileMax: Int) = {
-    val sortedBackupFiles = backupFiles.sorted.reverse
-
+  def deleteBackup(fileMax: Int) =
     sortedBackupFiles.drop(fileMax).foreach(deleteDirectory)
-  }
+
+  private def sortedBackupFiles =
+    backupFiles.sortBy(_.lastModified()).reverse
 }

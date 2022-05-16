@@ -9,7 +9,8 @@ trait FileList extends PathList {
     val folder = "world-" + new Date().toString.collect{ case ':' => '-'; case s => s}
     new File(backupFilePath + folder)
   }
-  val backupFiles: Array[File] = new File(backupFilePath).listFiles()
+  val backupFile = new File(backupFilePath)
+  def backupFiles: Array[File] = backupFile.listFiles()
   val mineallFile = new File(mineallFilePath)
   val cutallFile = new File(cutallFilePath)
   def logFile = Source.fromFile(logFilePath, "Shift-JIS")

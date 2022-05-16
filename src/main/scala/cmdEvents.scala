@@ -10,7 +10,7 @@ import java.io.File
 object cmdEvents extends FileList with MineRcon with DiscoList {
 
   def cmd(message: Message)(implicit c: CacheSnapshot, client: DiscordClient) = {
-    implicit val channelId = message.channelId
+    implicit val channelId: TextChannelId = message.channelId
 
     message match {
       case cmdMsg if cmdMsg.content.head == '!' =>
