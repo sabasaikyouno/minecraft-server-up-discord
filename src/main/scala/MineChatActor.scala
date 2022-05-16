@@ -1,7 +1,8 @@
 import akka.actor.Actor
 import MineChat.sendToDiscord
+import FileList._
 
-class MineChatActor() extends Actor with FileList {
+class MineChatActor() extends Actor {
   var lastModified = logJFile.lastModified()
   var lines = logFile.getLines()
   lines.length

@@ -3,7 +3,7 @@ import java.util.Date
 
 import scala.io.Source
 
-trait FileList extends PathList {
+object FileList extends PathList {
   val worldFile = new File(worldFilePath)
   def backupFolder = {
     val folder = "world-" + new Date().toString.collect{ case ':' => '-'; case s => s}

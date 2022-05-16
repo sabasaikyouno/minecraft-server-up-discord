@@ -2,12 +2,13 @@ import ackcord.requests.{CreateMessage, CreateMessageData}
 import ackcord.{CacheSnapshot, DiscordClient}
 import akka.actor.{ActorSystem, Props}
 import LogParse._
+import DiscoList._
 
 import scala.concurrent.duration._
 
 case class Chat()(implicit val c: CacheSnapshot, implicit val client: DiscordClient)
 
-object MineChat extends FileList with DiscoList {
+object MineChat {
   import actorSystem.dispatcher
 
   private val actorSystem = ActorSystem("MineChatActor")

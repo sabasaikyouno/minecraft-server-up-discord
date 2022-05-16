@@ -1,8 +1,9 @@
 import akka.actor.{ActorSystem, Props}
 import scala.concurrent.duration._
 import org.apache.commons.io.FileUtils._
+import FileList._
 
-object Backup extends FileList {
+object Backup {
 
   def backup() = {
     if (canBackup()) {

@@ -2,12 +2,15 @@ import ackcord.{CacheSnapshot, DiscordClient}
 import ackcord.data.{Message, TextChannelId}
 import ackcord.requests.{CreateMessage, CreateMessageData, CreateMessageFile}
 import Backup._
+import FileList._
+import MineRcon._
+import DiscoList._
 
 import scala.sys.process.Process
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.io.File
 
-object cmdEvents extends FileList with MineRcon with DiscoList {
+object cmdEvents {
 
   def cmd(message: Message)(implicit c: CacheSnapshot, client: DiscordClient) = {
     implicit val channelId: TextChannelId = message.channelId
