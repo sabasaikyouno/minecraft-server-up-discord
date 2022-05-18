@@ -2,6 +2,7 @@ import ackcord._
 import cmdEvents.cmd
 import Backup._
 import MineChat._
+import YTChat.startYTChat
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
@@ -22,5 +23,8 @@ object Main extends App {
 
   // 自動バックアップスタート
   startAutoBackup()
+
+  // start youtube chat
+  startYTChat()
 }
 

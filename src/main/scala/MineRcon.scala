@@ -15,10 +15,19 @@ object MineRcon {
 
   def sendMineChat(msg: Message) = {
     if (rcon.authenticate(minePassword))
-      rcon.sendCommand(fmtChat(msg.authorUsername, msg.content))
+      rcon.sendCommand(fmtDiscordChat(msg.authorUsername, msg.content))
   }
 
-  private def fmtChat(name: String, chat: String) = {
+  def sendMineChat(name: String, chat: String) = {
+    if (rcon.authenticate(minePassword))
+      rcon.sendCommand(fmtYoutubeChat(name, chat))
+  }
+
+  private def fmtDiscordChat(name: String, chat: String) = {
     s"""tellraw @a [{"text":"[Discord]", "color":"aqua"}, {"text":" $name >> $chat", "color":"white"}]"""
+  }
+
+  private def fmtYoutubeChat(name: String, chat: String) = {
+    s"""tellraw kuro0117 [{"text":"[YouTube]", "color":"red"}, {"text":" $name >> $chat", "color":"white"}]"""
   }
 }
