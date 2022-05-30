@@ -13,21 +13,32 @@ object MineRcon {
     .withCharset(Charset.forName("utf-8"))
     .build()
 
-  def sendMineChat(msg: Message) = {
+  def sendMineChat(msg: Any) = {
+    val cmd = msg match {
+      case msg: Message => fmtDiscordChat(msg)
+      case msg: YTMessage => fmtYoutubeChat(msg)
+    }
+
     if (rcon.authenticate(minePassword))
-      rcon.sendCommand(fmtDiscordChat(msg.authorUsername, msg.content))
+      rcon.sendCommand(cmd)
   }
 
-  def sendMineChat(name: String, chat: String) = {
-    if (rcon.authenticate(minePassword))
-      rcon.sendCommand(fmtYoutubeChat(name, chat))
+  private def fmtDiscordChat(msg: Message) = {
+    fmtChat(msg.authorUsername, msg.content, from = "[Discord]", fromColor = "aqua")
   }
 
-  private def fmtDiscordChat(name: String, chat: String) = {
-    s"""tellraw @a [{"text":"[Discord]", "color":"aqua"}, {"text":" $name >> $chat", "color":"white"}]"""
+  private def fmtYoutubeChat(msg: YTMessage) = {
+    fmtChat(msg.name, msg.chat, target = "kuro0117", from = "[YouTube]", fromColor = "red")
   }
 
-  private def fmtYoutubeChat(name: String, chat: String) = {
-    s"""tellraw kuro0117 [{"text":"[YouTube]", "color":"red"}, {"text":" $name >> $chat", "color":"white"}]"""
+  private def fmtChat(
+    name: String,
+    chat: String,
+    target: String = "@a",
+    chatColor: String = "white",
+    from: String = "",
+    fromColor: String = "white"
+  ): String = {
+    s"""tellraw $target [{"text":"$from", "color":"$fromColor"}, {"text":" $name >> $chat", "color":"$chatColor"}]"""
   }
 }

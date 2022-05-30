@@ -8,8 +8,8 @@ class MineChatActor() extends Actor {
   lines.length
 
   override def receive = {
-    case chat: Chat if lastModified != logJFile.lastModified() =>
-      import chat._
+    case chatImp: ChatImp if lastModified != logJFile.lastModified() =>
+      import chatImp._
       if (lines.hasNext) {
         lines.foreach(sendToDiscord)
         lastModified = logJFile.lastModified()

@@ -2,6 +2,8 @@ import akka.actor.Actor
 import YTChat._
 import MineRcon.sendMineChat
 
+case class YTMessage(name: String, chat: String)
+
 class YTChatActor extends Actor {
   var latestTime = 0L
 
@@ -26,7 +28,7 @@ class YTChatActor extends Actor {
             if time > latestTime
           } {
             latestTime = time
-            sendMineChat(name, chat)
+            sendMineChat(YTMessage(name, chat))
           }
 
           getNextConOpt(liveJson) match {

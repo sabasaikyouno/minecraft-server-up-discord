@@ -2,17 +2,8 @@ import akka.actor.{ActorSystem, Props}
 import okhttp3.{MediaType, OkHttpClient, Request, RequestBody, Response}
 import io.circe._
 import io.circe.parser._
-import org.joda.time.{DateTime, DateTimeZone}
 
 import scala.concurrent.duration._
-
-class ChatContents(val name: String, val chat: String, val publishedAt: Long)
-
-object ChatContents {
-  def apply(name: Json, chat: Json, publishedAt: Json) = {
-    new ChatContents(name.as[String].getOrElse(""), chat.as[String].getOrElse(""), DateTime.parse(publishedAt.as[String].getOrElse("0")).withZone(DateTimeZone.UTC).getMillis)
-  }
-}
 
 object YTChat {
   import actorSystem.dispatcher

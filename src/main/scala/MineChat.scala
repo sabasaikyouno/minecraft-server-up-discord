@@ -6,7 +6,7 @@ import DiscoList._
 
 import scala.concurrent.duration._
 
-case class Chat()(implicit val c: CacheSnapshot, implicit val client: DiscordClient)
+case class ChatImp()(implicit val c: CacheSnapshot, implicit val client: DiscordClient)
 
 object MineChat {
   import actorSystem.dispatcher
@@ -15,7 +15,7 @@ object MineChat {
   private val mineChatActor = actorSystem.actorOf(Props(new MineChatActor()))
 
   def startMineChat()(implicit c: CacheSnapshot, client: DiscordClient) =
-    actorSystem.scheduler.schedule(3.seconds, 500.millis, mineChatActor, Chat())
+    actorSystem.scheduler.schedule(3.seconds, 500.millis, mineChatActor, ChatImp())
 
   def sendToDiscord(line: String)(implicit c: CacheSnapshot, client: DiscordClient): Unit = {
     parse(line) match {
