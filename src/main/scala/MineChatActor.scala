@@ -1,6 +1,8 @@
 import akka.actor.Actor
-import MineChat.sendToDiscord
+import MineChat.{sendToDiscord, sendToMineChat}
 import FileList._
+
+case class MineMessage(name: String, chat: String)
 
 class MineChatActor() extends Actor {
   var lastModified = logJFile.lastModified()
@@ -11,7 +13,9 @@ class MineChatActor() extends Actor {
     case chatImp: ChatImp if lastModified != logJFile.lastModified() =>
       import chatImp._
       if (lines.hasNext) {
-        lines.foreach(sendToDiscord)
+        val chatLines = lines.toList
+        chatLines.foreach(sendToDiscord)
+        chatLines.foreach(sendToMineChat)
         lastModified = logJFile.lastModified()
       } else {
         lines = logFile.getLines()

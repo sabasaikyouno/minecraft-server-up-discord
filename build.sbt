@@ -16,6 +16,7 @@ libraryDependencies += "com.typesafe.akka" %% "akka-stream-typed" % "2.6.14"
 libraryDependencies += "nl.vv32.rcon" % "rcon" % "1.2.0"
 libraryDependencies += "com.squareup.okhttp3" % "okhttp" % "4.9.3"
 libraryDependencies += "joda-time" % "joda-time" % "2.10.14"
+libraryDependencies += "com.ibm.icu" % "icu4j" % "71.1"
 
 val circeVersion = "0.14.1"
 

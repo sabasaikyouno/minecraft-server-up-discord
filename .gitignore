@@ -2,3 +2,5 @@ logs
 target
 /.idea
 project
+lib
+dict

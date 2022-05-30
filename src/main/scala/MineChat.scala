@@ -3,6 +3,7 @@ import ackcord.{CacheSnapshot, DiscordClient}
 import akka.actor.{ActorSystem, Props}
 import LogParse._
 import DiscoList._
+import MineRcon.sendMineChat
 
 import scala.concurrent.duration._
 
@@ -26,6 +27,14 @@ object MineChat {
             CreateMessageData(chat)
           )
         ).map(_ => ())
+      case None => ()
+    }
+  }
+
+  def sendToMineChat(line: String): Unit = {
+    chatParse(line) match {
+      case Some(mineMessage) =>
+        sendMineChat(mineMessage)
       case None => ()
     }
   }
