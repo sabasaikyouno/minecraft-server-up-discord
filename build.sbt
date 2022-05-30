@@ -17,6 +17,7 @@ libraryDependencies += "nl.vv32.rcon" % "rcon" % "1.2.0"
 libraryDependencies += "com.squareup.okhttp3" % "okhttp" % "4.9.3"
 libraryDependencies += "joda-time" % "joda-time" % "2.10.14"
 libraryDependencies += "com.ibm.icu" % "icu4j" % "71.1"
+libraryDependencies += "org.json4s" %% "json4s-native" % "4.0.5"
 
 val circeVersion = "0.14.1"
 
