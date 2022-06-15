@@ -1,6 +1,8 @@
 import akka.actor.Actor
 import YTChat._
 import MineRcon.sendMineChat
+import io.circe.Json
+import io.circe.parser._
 
 case class YTMessage(name: String, chat: String)
 
@@ -23,7 +25,7 @@ class YTChatActor extends Actor {
           for {
             json <- liveJson.findAllByKey("liveChatTextMessageRenderer")
             name = json.findAllByKey("simpleText").head.as[String].getOrElse("")
-            chat = json.findAllByKey("text").head.as[String].getOrElse("")
+            chat = json.findAllByKey("text").headOption.getOrElse(Json.Null).as[String].getOrElse("emoji")
             time = json.findAllByKey("timestampUsec").head.as[Long].getOrElse(0L)
             if time > latestTime
           } {
